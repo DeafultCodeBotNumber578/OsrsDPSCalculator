@@ -67,6 +67,7 @@ public class DPSMain {
      * Inquisitors full armor bonus
      * Dharok
      * Ice barrage (Just needs to be on a single target)
+     * Justiciar/Buwlark and the melee defence items
      *
      * Big Stretch goals:
      * a fancy GUI

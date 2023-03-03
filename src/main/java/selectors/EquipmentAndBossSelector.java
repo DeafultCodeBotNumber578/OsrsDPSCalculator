@@ -1,5 +1,6 @@
 package selectors;
 
+import equipment.MeleeArmor;
 import equipment.MeleeEquipmentLoadout;
 import equipment.RangedEquipmentLoadout;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,9 @@ public class EquipmentAndBossSelector {
     public List<MeleeEquipmentLoadout> defineMeleeEquipmentLoadouts() {
         List<MeleeEquipmentLoadout> meleeEquipmentLoadouts = new ArrayList<>();
 
-        //Build loadouts
+        MeleeEquipmentLoadout meleeLoadout1 =  MeleeEquipmentLoadout.builder()
+                .headgear(MeleeArmor.SERPENTINE_HELM)
+                .build();
 
         return meleeEquipmentLoadouts;
     }

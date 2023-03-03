@@ -1,8 +1,10 @@
 package equipment;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class MeleeEquipmentLoadout {
     private MeleeArmor headgear;
     private MeleeArmor cape;

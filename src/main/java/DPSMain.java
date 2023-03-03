@@ -1,6 +1,9 @@
 import equipment.MeleeEquipmentLoadout;
 import equipment.RangedEquipmentLoadout;
 import selectors.EquipmentAndBossSelector;
+import statsandmodifiers.DefenceLoweringSpecs;
+import statsandmodifiers.StatBoosts;
+import statsandmodifiers.CombatStats;
 
 import java.util.List;
 
@@ -13,10 +16,15 @@ public class DPSMain {
         EquipmentAndBossSelector equipmentAndBossSelector = new EquipmentAndBossSelector();
 
         List<MeleeEquipmentLoadout> meleeEquipmentLoadouts = equipmentAndBossSelector.defineMeleeEquipmentLoadouts();
-        List<RangedEquipmentLoadout> rangedEquipmentLoadouts = equipmentAndBossSelector.defineRangedAndMageEquipmentLoadout();
-        //TODO get the number of BGS/Warhammer specs
+        List<RangedEquipmentLoadout> rangedEquipmentLoadouts = equipmentAndBossSelector.defineRangedEquipmentLoadout();
 
-        //TODO define the stat and prayer loadouts in the EquipmentAndBossSelector. This can be one list of one pojo as all 3 styles work in the same way
+        DefenceLoweringSpecs defenceLoweringSpecs = equipmentAndBossSelector.defineSpecWeaponHits();
+
+        //We don't need to bother selecting different prayers and can assume Rigor/Augory/Piety. We can implement them later
+
+        StatBoosts statBoosts = equipmentAndBossSelector.defineStatBoosts();
+
+        CombatStats combatStats = equipmentAndBossSelector.defineCombatStats();
 
         //TODO break the bosses up into major groups according to this link: https://oldschool.runescape.wiki/w/Boss
         //This list should function in an inclusive and exclusive mode. You can include all bosses and exclude groups.

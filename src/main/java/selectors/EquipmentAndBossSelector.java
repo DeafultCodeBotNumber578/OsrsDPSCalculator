@@ -5,6 +5,9 @@ import equipment.MeleeEquipmentLoadout;
 import equipment.RangedEquipmentLoadout;
 import lombok.NoArgsConstructor;
 import statsandmodifiers.DefenceLoweringSpecs;
+import statsandmodifiers.StatBoostingItems;
+import statsandmodifiers.StatBoosts;
+import statsandmodifiers.CombatStats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,7 @@ public class EquipmentAndBossSelector {
         return meleeEquipmentLoadouts;
     }
 
-    public List<RangedEquipmentLoadout> defineRangedAndMageEquipmentLoadout() {
+    public List<RangedEquipmentLoadout> defineRangedEquipmentLoadout() {
         List<RangedEquipmentLoadout> rangedEquipmentLoadouts = new ArrayList<>();
 
         //Build loadouts
@@ -57,8 +60,26 @@ public class EquipmentAndBossSelector {
         return DefenceLoweringSpecs.builder()
                 .bgsSpecDamage(50)
                 .numberOfDWHSpecs(2)
-        .build();
+            .build();
     }
+
+    public CombatStats defineCombatStats() {
+        return CombatStats.builder()
+                .magicLevel(99)
+                .rangedLevel(99)
+                .attackLevel(99)
+                .strengthLevel(99)
+            .build();
+    }
+
+    public StatBoosts defineStatBoosts() {
+        return StatBoosts.builder()
+                .magicBoost(StatBoostingItems.SMELLING_SALTS)
+                .rangedBoost(StatBoostingItems.SMELLING_SALTS)
+                .meleeBoost(StatBoostingItems.SMELLING_SALTS)
+            .build();
+    }
+
     //TODO definePrayers();
     //TODO defineStats();
     //TODO definePotions();

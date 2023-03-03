@@ -1,3 +1,4 @@
+import equipment.Equipment;
 import equipment.MeleeEquipmentLoadout;
 import equipment.RangedEquipmentLoadout;
 import selectors.EquipmentAndBossSelector;
@@ -5,11 +6,19 @@ import statsandmodifiers.DefenceLoweringSpecs;
 import statsandmodifiers.StatBoosts;
 import statsandmodifiers.CombatStats;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DPSMain {
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception {
+        List<Equipment> allEquipment = getAllEquipmentFromConfigFiles();
+
 
         //Going to want to have a single file to define everything in so you don't have to switch around and make sure
         //That all of the equipment is correct
@@ -37,6 +46,40 @@ public class DPSMain {
         //There will need to be a special rules checker for things like fang and the brimstone ring
 
         //Return a list of DPS comparisons for each monster. Make some indication of which weapon wins and figure out an easy way to identify all of them
+    }
+
+    public static List<Equipment> getAllEquipmentFromConfigFiles() throws IOException {
+        List<String> equipmentFileLines = Files.walk(Paths.get("./src/main/resources"))
+                .filter(p -> p.toString().endsWith(".csv"))
+                .flatMap(p -> {
+                    try {
+                        return Files.readAllLines(p).stream();
+                    }
+                    catch (IOException e) {
+                        return new ArrayList<String>().stream();
+                    }
+                })
+                .collect(Collectors.toList());
+        return equipmentFileLines.stream()
+                .map(DPSMain::parseEquipmentFileLine)
+                .collect(Collectors.toList());
+    }
+
+    public static Equipment parseEquipmentFileLine(String line) {
+        String[] split = line.split(",");
+        if(split.length < 16 || split.length > 17) {
+            throw new RuntimeException("Malformed equipment config line: " + line);
+        }
+        Equipment equipment = new Equipment(
+                split[0], Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]), Integer.valueOf(split[4]),
+                Integer.valueOf(split[5]), Integer.valueOf(split[6]), Integer.valueOf(split[7]), Integer.valueOf(split[8]), Integer.valueOf(split[9]),
+                Integer.valueOf(split[10]), Integer.valueOf(split[11]), Integer.valueOf(split[12]), Integer.valueOf(split[13]), Integer.valueOf(split[14]),
+                Equipment.EquipmentSlot.valueOf(split[15]));
+
+        if(split.length == 17) {
+            equipment.setEquipmentCategories(Arrays.asList(split[16].split(";")));
+        }
+        return equipment;
     }
 
     /**

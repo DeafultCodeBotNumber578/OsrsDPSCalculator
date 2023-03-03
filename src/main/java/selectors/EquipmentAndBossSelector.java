@@ -1,7 +1,7 @@
 package selectors;
 
 import equipment.MeleeEquipmentLoadout;
-import equipment.RangedAndMageEquipmentLoadout;
+import equipment.RangedEquipmentLoadout;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ public class EquipmentAndBossSelector {
         return meleeEquipmentLoadouts;
     }
 
-    public List<RangedAndMageEquipmentLoadout> defineRangedAndMageEquipmentLoadout() {
-        List<RangedAndMageEquipmentLoadout> rangedAndMageEquipmentLoadouts = new ArrayList<>();
+    public List<RangedEquipmentLoadout> defineRangedAndMageEquipmentLoadout() {
+        List<RangedEquipmentLoadout> rangedEquipmentLoadouts = new ArrayList<>();
 
         //Build loadouts
 
-        return rangedAndMageEquipmentLoadouts;
+        return rangedEquipmentLoadouts;
     }
 
     //TODO definePrayers();

@@ -1,5 +1,5 @@
 import equipment.MeleeEquipmentLoadout;
-import equipment.RangedAndMageEquipmentLoadout;
+import equipment.RangedEquipmentLoadout;
 import selectors.EquipmentAndBossSelector;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class DPSMain {
         EquipmentAndBossSelector equipmentAndBossSelector = new EquipmentAndBossSelector();
 
         List<MeleeEquipmentLoadout> meleeEquipmentLoadouts = equipmentAndBossSelector.defineMeleeEquipmentLoadouts();
-        List<RangedAndMageEquipmentLoadout> rangedAndMageEquipmentLoadouts = equipmentAndBossSelector.defineRangedAndMageEquipmentLoadout();
+        List<RangedEquipmentLoadout> rangedEquipmentLoadouts = equipmentAndBossSelector.defineRangedAndMageEquipmentLoadout();
         //TODO get the number of BGS/Warhammer specs
 
         //TODO define the stat and prayer loadouts in the EquipmentAndBossSelector. This can be one list of one pojo as all 3 styles work in the same way

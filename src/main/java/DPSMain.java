@@ -1,9 +1,5 @@
-import equipment.MeleeEquipmentLoadout;
-import equipment.RangedEquipmentLoadout;
+import playermodifiers.PlayerLoadout;
 import selectors.EquipmentAndBossSelector;
-import statsandmodifiers.DefenceLoweringSpecs;
-import statsandmodifiers.StatBoosts;
-import statsandmodifiers.CombatStats;
 
 import java.util.List;
 
@@ -12,19 +8,10 @@ public class DPSMain {
     public static void main(String args[]) {
 
         //Going to want to have a single file to define everything in so you don't have to switch around and make sure
-        //That all of the equipment is correct
+        //That all of the playermodifiers.equipment is correct
         EquipmentAndBossSelector equipmentAndBossSelector = new EquipmentAndBossSelector();
 
-        List<MeleeEquipmentLoadout> meleeEquipmentLoadouts = equipmentAndBossSelector.defineMeleeEquipmentLoadouts();
-        List<RangedEquipmentLoadout> rangedEquipmentLoadouts = equipmentAndBossSelector.defineRangedEquipmentLoadout();
-
-        DefenceLoweringSpecs defenceLoweringSpecs = equipmentAndBossSelector.defineSpecWeaponHits();
-
-        //We don't need to bother selecting different prayers and can assume Rigor/Augory/Piety. We can implement them later
-
-        StatBoosts statBoosts = equipmentAndBossSelector.defineStatBoosts();
-
-        CombatStats combatStats = equipmentAndBossSelector.defineCombatStats();
+        List<PlayerLoadout> playerLoadouts = equipmentAndBossSelector.defineMeleePlayerLoadouts();
 
         //TODO break the bosses up into major groups according to this link: https://oldschool.runescape.wiki/w/Boss
         //This list should function in an inclusive and exclusive mode. You can include all bosses and exclude groups.

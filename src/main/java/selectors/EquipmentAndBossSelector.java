@@ -1,13 +1,13 @@
 package selectors;
 
-import equipment.MeleeArmor;
-import equipment.MeleeEquipmentLoadout;
-import equipment.RangedEquipmentLoadout;
+import playermodifiers.PlayerLoadout;
+import playermodifiers.equipment.melee.MeleeArmor;
+import playermodifiers.equipment.melee.MeleeEquipmentLoadout;
 import lombok.NoArgsConstructor;
-import statsandmodifiers.DefenceLoweringSpecs;
-import statsandmodifiers.StatBoostingItems;
-import statsandmodifiers.StatBoosts;
-import statsandmodifiers.CombatStats;
+import playermodifiers.statmodifiers.DefenceLoweringSpecs;
+import playermodifiers.statmodifiers.StatBoostingItems;
+import playermodifiers.statmodifiers.StatBoosts;
+import playermodifiers.statmodifiers.CombatStats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +30,10 @@ public class EquipmentAndBossSelector {
         Classes: MeleeArmor, RangedArmor, MageArmor
      */
 
-    public List<MeleeEquipmentLoadout> defineMeleeEquipmentLoadouts() {
-        List<MeleeEquipmentLoadout> meleeEquipmentLoadouts = new ArrayList<>();
+    public List<PlayerLoadout> defineMeleePlayerLoadouts() {
+        List<PlayerLoadout> playerLoadouts = new ArrayList<>();
 
+        //MELEE LOAD OUT 1------------------------------------------------------------
         MeleeEquipmentLoadout meleeLoadout1 =  MeleeEquipmentLoadout.builder()
                 .headgear(MeleeArmor.SERPENTINE_HELM)
                 .cape(MeleeArmor.INFERNAL_CAPE)
@@ -45,39 +46,30 @@ public class EquipmentAndBossSelector {
                 .ring(MeleeArmor.BERSERKER_RING)
                 .build();
 
-        return meleeEquipmentLoadouts;
-    }
-
-    public List<RangedEquipmentLoadout> defineRangedEquipmentLoadout() {
-        List<RangedEquipmentLoadout> rangedEquipmentLoadouts = new ArrayList<>();
-
-        //Build loadouts
-
-        return rangedEquipmentLoadouts;
-    }
-
-    public DefenceLoweringSpecs defineSpecWeaponHits() {
-        return DefenceLoweringSpecs.builder()
+        DefenceLoweringSpecs defenceLoweringSpecs1 = DefenceLoweringSpecs.builder()
                 .bgsSpecDamage(50)
                 .numberOfDWHSpecs(2)
-            .build();
-    }
+                .build();
 
-    public CombatStats defineCombatStats() {
-        return CombatStats.builder()
+        CombatStats combatStats1 = CombatStats.builder()
                 .magicLevel(99)
                 .rangedLevel(99)
                 .attackLevel(99)
                 .strengthLevel(99)
-            .build();
-    }
+                .build();
 
-    public StatBoosts defineStatBoosts() {
-        return StatBoosts.builder()
+        //TODO this can be simplified. No need to have it repeated because you're only going to be using all overloads, all salts, or all supers
+        StatBoosts statBoosts1 = StatBoosts.builder()
                 .magicBoost(StatBoostingItems.SMELLING_SALTS)
                 .rangedBoost(StatBoostingItems.SMELLING_SALTS)
                 .meleeBoost(StatBoostingItems.SMELLING_SALTS)
-            .build();
+                .build();
+
+        playerLoadouts.add(new PlayerLoadout(meleeLoadout1, null, null,
+                defenceLoweringSpecs1, statBoosts1, combatStats1));
+        //END-MELEE LOAD OUT 1-----------------------------------------------------
+
+        return playerLoadouts;
     }
 
     //TODO definePrayers();

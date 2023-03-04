@@ -1,4 +1,4 @@
-package equipment;
+package playermodifiers.equipment.melee;
 
 import lombok.Builder;
 import lombok.Data;

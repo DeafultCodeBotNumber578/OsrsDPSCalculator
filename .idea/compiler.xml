@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="DpsCalculatorV1" />
+        <module name="OsrsDPSCalculator" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="DpsCalculatorV1" target="17" />
+      <module name="OsrsDPSCalculator" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package equipment;
+package playermodifiers.equipment.melee;
 
 public enum MeleeWeapons {
     //Melee weapons have several important properties.

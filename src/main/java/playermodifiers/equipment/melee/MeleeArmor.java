@@ -1,4 +1,4 @@
-package equipment;
+package playermodifiers.equipment.melee;
 
 public enum MeleeArmor {
     //Melee armor has 4 important properties. 1) stab accuracy, 2) slash accuracy, 3) crush accuracy, 4) strength

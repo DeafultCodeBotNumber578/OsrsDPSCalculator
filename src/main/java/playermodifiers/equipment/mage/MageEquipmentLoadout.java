@@ -1,9 +1,11 @@
-package equipment;
+package playermodifiers.equipment.mage;
 
 import lombok.Data;
+import playermodifiers.equipment.ranged.RangedArmor;
+import playermodifiers.equipment.ranged.RangedWeapons;
 
 @Data
-public class RangedEquipmentLoadout {
+public class MageEquipmentLoadout {
     private RangedArmor headgear;
     private RangedArmor cape;
     private RangedArmor necklace;
@@ -14,5 +16,5 @@ public class RangedEquipmentLoadout {
     private RangedArmor feet;
     private RangedArmor ring;
     private RangedWeapons rangedOrMageWeapon;
-    private Ammo ammo;
+    private Spells spell;
 }

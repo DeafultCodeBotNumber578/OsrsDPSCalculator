@@ -1,4 +1,4 @@
-package statsandmodifiers;
+package playermodifiers.statmodifiers;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

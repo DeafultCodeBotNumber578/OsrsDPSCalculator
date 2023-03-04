@@ -1,4 +1,4 @@
-package equipment;
+package playermodifiers.equipment.mage;
 
 public enum MageArmor {
     //Magic and ranged items both have 2 important properties. 1) accuracy 2) strength

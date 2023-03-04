@@ -1,4 +1,4 @@
-package equipment;
+package playermodifiers.equipment.ranged;
 
 public enum Ammo {
     //Ammo only has 2 important stats, accuracy and strength.

@@ -1,4 +1,4 @@
-package statsandmodifiers;
+package playermodifiers.statmodifiers;
 
 public enum Prayers {
 

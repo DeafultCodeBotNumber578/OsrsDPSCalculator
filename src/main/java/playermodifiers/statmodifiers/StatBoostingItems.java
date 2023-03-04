@@ -1,4 +1,4 @@
-package statsandmodifiers;
+package playermodifiers.statmodifiers;
 
 public enum StatBoostingItems {
     SUPER_COMBAT(5, 15),

@@ -1,4 +1,4 @@
-package equipment;
+package playermodifiers.equipment.ranged;
 
 public enum RangedArmor {
     //Ranged items have 3 meaningful properties 1) accuracy 2) strength 3) magic accuracy

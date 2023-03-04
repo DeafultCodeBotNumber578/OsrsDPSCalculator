@@ -1,4 +1,4 @@
-package equipment;
+package playermodifiers.equipment.mage;
 
 public enum MageWeapons {
     //Ranged and Mage weapons have 3 important properties. 1) accuracy 2) strength 3) weapon speed

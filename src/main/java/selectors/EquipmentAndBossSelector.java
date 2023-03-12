@@ -1,9 +1,11 @@
 package selectors;
 
+import bosses.BossGroups;
 import playermodifiers.PlayerLoadout;
 import playermodifiers.equipment.melee.MeleeArmor;
 import playermodifiers.equipment.melee.MeleeEquipmentLoadout;
 import lombok.NoArgsConstructor;
+import playermodifiers.equipment.melee.MeleeWeapons;
 import playermodifiers.statmodifiers.DefenceLoweringSpecs;
 import playermodifiers.statmodifiers.StatBoostingItems;
 import playermodifiers.statmodifiers.StatBoosts;
@@ -34,7 +36,7 @@ public class EquipmentAndBossSelector {
         List<PlayerLoadout> playerLoadouts = new ArrayList<>();
 
         //MELEE LOAD OUT 1------------------------------------------------------------
-        MeleeEquipmentLoadout meleeLoadout1 =  MeleeEquipmentLoadout.builder()
+        MeleeEquipmentLoadout meleeEquipmentLoadout1 =  MeleeEquipmentLoadout.builder()
                 .headgear(MeleeArmor.SERPENTINE_HELM)
                 .cape(MeleeArmor.INFERNAL_CAPE)
                 .necklace(MeleeArmor.AMULET_OF_TORTURE)
@@ -45,6 +47,8 @@ public class EquipmentAndBossSelector {
                 .feet(MeleeArmor.DRAGON_BOOTS)
                 .ring(MeleeArmor.BERSERKER_RING)
                 .build();
+
+        MeleeWeapons meleeWeapons1 = MeleeWeapons.GHRAZI_RAPIER;
 
         DefenceLoweringSpecs defenceLoweringSpecs1 = DefenceLoweringSpecs.builder()
                 .bgsSpecDamage(50)
@@ -65,11 +69,20 @@ public class EquipmentAndBossSelector {
                 .meleeBoost(StatBoostingItems.SMELLING_SALTS)
                 .build();
 
-        playerLoadouts.add(new PlayerLoadout(meleeLoadout1, null, null,
+        playerLoadouts.add(new PlayerLoadout(meleeEquipmentLoadout1, null, null,
                 defenceLoweringSpecs1, statBoosts1, combatStats1));
         //END-MELEE LOAD OUT 1-----------------------------------------------------
 
         return playerLoadouts;
+    }
+
+    public List<BossGroups> definBossExclusionGroups() {
+        List<BossGroups> bossExclusionGroups = new ArrayList<>();
+        BossGroups exclusionGroup1 = BossGroups.XERIC;
+
+        bossExclusionGroups.add(exclusionGroup1);
+
+        return bossExclusionGroups;
     }
 
     //TODO definePrayers();

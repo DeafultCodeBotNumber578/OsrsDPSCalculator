@@ -1,3 +1,5 @@
+import bosses.BossGroups;
+import bosses.BossesAndMonsters;
 import playermodifiers.PlayerLoadout;
 import selectors.EquipmentAndBossSelector;
 
@@ -13,10 +15,7 @@ public class DPSMain {
 
         List<PlayerLoadout> playerLoadouts = equipmentAndBossSelector.defineMeleePlayerLoadouts();
 
-        //TODO break the bosses up into major groups according to this link: https://oldschool.runescape.wiki/w/Boss
-        //This list should function in an inclusive and exclusive mode. You can include all bosses and exclude groups.
-        //Or you can include only specific bosses only boss groups (like GWDBosses) or a combination of both.
-        //Monsters should have an exclusion property for style types. I.E. Olm's melee hand can only be melee'd and arma can't be melee'd
+        List<BossGroups> bossExclusionGroups = equipmentAndBossSelector.definBossExclusionGroups();
 
         //TODOFeed into DPS calculator
         //Dps calculator will, for each monster, determine the max hit and then average hit and use the averaged accuracy

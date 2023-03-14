@@ -1,5 +1,5 @@
 package playermodifiers.equipment.melee;
 
 public enum MeleeCombatStyles {
-    ACCURATE, AGGRESSIVE, DEFENSIVE;
+    ACCURATE, AGGRESSIVE, DEFENSIVE, CONTROLLED;
 }

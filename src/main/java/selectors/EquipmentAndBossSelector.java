@@ -1,6 +1,7 @@
 package selectors;
 
 import bosses.BossGroups;
+import playermodifiers.CombatStyle;
 import playermodifiers.PlayerLoadout;
 import playermodifiers.equipment.melee.MeleeArmor;
 import playermodifiers.equipment.melee.MeleeEquipmentLoadout;
@@ -55,6 +56,7 @@ public class EquipmentAndBossSelector {
                 .numberOfDWHSpecs(2)
                 .build();
 
+        //TODO if these aren't there assume they're max
         CombatStats combatStats1 = CombatStats.builder()
                 .magicLevel(99)
                 .rangedLevel(99)
@@ -69,8 +71,10 @@ public class EquipmentAndBossSelector {
                 .meleeBoost(StatBoostingItems.SMELLING_SALTS)
                 .build();
 
-        playerLoadouts.add(new PlayerLoadout(meleeEquipmentLoadout1, null, null,
-                defenceLoweringSpecs1, statBoosts1, combatStats1));
+        CombatStyle combatStyle = CombatStyle.MELEE;
+
+        playerLoadouts.add(new PlayerLoadout(meleeEquipmentLoadout1, meleeWeapons1, null, null,
+                defenceLoweringSpecs1, statBoosts1, combatStats1, combatStyle));
         //END-MELEE LOAD OUT 1-----------------------------------------------------
 
         return playerLoadouts;

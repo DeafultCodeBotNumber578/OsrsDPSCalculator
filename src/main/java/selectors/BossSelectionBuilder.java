@@ -17,7 +17,9 @@ public class BossSelectionBuilder {
         BossesAndMonsterStats[] allBossesAndMonsters = BossesAndMonsterStats.class.getEnumConstants();
         List<BossesAndMonsterStats> allBossesAndMonsterStatsList = Arrays.asList(allBossesAndMonsters);
 
-        if (bossGroups.contains(BossGroup.GWD)) {
+        if (bossGroups.size() == 1 && bossGroups.get(0).equals(BossGroup.ALL)) {
+            finalBossesAndMonsterStatsList.addAll(allBossesAndMonsterStatsList);
+        } else if (bossGroups.equals(BossGroup.GWD)) {
             finalBossesAndMonsterStatsList.addAll(
             allBossesAndMonsterStatsList.stream().filter(mob -> mob.getGroup().equals(BossGroup.GWD)).collect(Collectors.toList()));
         }

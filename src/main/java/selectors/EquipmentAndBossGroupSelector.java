@@ -49,7 +49,7 @@ public class EquipmentAndBossGroupSelector {
                 .ring(MeleeArmor.BERSERKER_RING)
                 .build();
 
-        MeleeWeapons meleeWeapons1 = MeleeWeapons.GHRAZI_RAPIER;
+        MeleeWeapons meleeWeapons1 = MeleeWeapons.ABYSSAL_TENTACLE;
 
 
         DefenceLoweringSpecs defenceLoweringSpecs1 = DefenceLoweringSpecs.builder()
@@ -78,6 +78,48 @@ public class EquipmentAndBossGroupSelector {
                 defenceLoweringSpecs1, statBoosts1, combatStats1, combatStyle));
         //END-MELEE LOAD OUT 1-----------------------------------------------------
 
+        //MELEE LOAD OUT 1------------------------------------------------------------
+        MeleeEquipmentLoadout meleeEquipmentLoadout2 =  MeleeEquipmentLoadout.builder()
+                .headgear(MeleeArmor.SERPENTINE_HELM)
+                .cape(MeleeArmor.INFERNAL_CAPE)
+                .necklace(MeleeArmor.AMULET_OF_TORTURE)
+                .body(MeleeArmor.BANDOS_CHESTPLATE)
+                .legs(MeleeArmor.BANDOS_TASSETS)
+                .shield(MeleeArmor.AVERNIC_DEFENDER)
+                .hands(MeleeArmor.FEROCIOUS_GLOVES)
+                .feet(MeleeArmor.DRAGON_BOOTS)
+                .ring(MeleeArmor.BERSERKER_RING)
+                .build();
+
+        MeleeWeapons meleeWeapons2 = MeleeWeapons.GHRAZI_RAPIER;
+
+
+        DefenceLoweringSpecs defenceLoweringSpecs2 = DefenceLoweringSpecs.builder()
+                .bgsSpecDamage(50)
+                .numberOfDWHSpecs(2)
+                .build();
+
+        //TODO if these aren't present assume they're max
+        CombatStats combatStats2 = CombatStats.builder()
+                .magicLevel(99)
+                .rangedLevel(99)
+                .attackLevel(99)
+                .strengthLevel(99)
+                .build();
+
+        //TODO this can be simplified. No need to have it repeated because you're only going to be using all overloads, all salts, or all supers
+        StatBoosts statBoosts2 = StatBoosts.builder()
+                .magicBoost(StatBoostingItems.SMELLING_SALTS)
+                .rangedBoost(StatBoostingItems.SMELLING_SALTS)
+                .meleeBoost(StatBoostingItems.SMELLING_SALTS)
+                .build();
+
+        CombatStyle combatStyle2 = CombatStyle.MELEE;
+
+        playerLoadouts.add(new PlayerLoadout(meleeEquipmentLoadout2, meleeWeapons2, null, null,
+                defenceLoweringSpecs2, statBoosts2, combatStats2, combatStyle2));
+        //END-MELEE LOAD OUT 1-----------------------------------------------------
+
         return playerLoadouts;
     }
 
@@ -85,7 +127,7 @@ public class EquipmentAndBossGroupSelector {
     //The boss definitions pojo isn't in good shape for that yet
     public List<BossGroup> selectBossGroups() {
         List<BossGroup> bossGroups = new ArrayList<>();
-        BossGroup bossGroup1 = BossGroup.GWD;
+        BossGroup bossGroup1 = BossGroup.ALL;
 
         bossGroups.add(bossGroup1);
 

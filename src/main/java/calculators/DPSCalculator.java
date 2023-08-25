@@ -1,6 +1,7 @@
 package calculators;
 
 import mobs.BossesAndMonsterStats;
+import mobs.MobRestriction;
 import playermodifiers.CombatStyle;
 import playermodifiers.PlayerLoadout;
 import playermodifiers.equipment.melee.MeleeCombatStyles;
@@ -10,6 +11,7 @@ import playermodifiers.equipment.melee.MeleeWeapons;
 import playermodifiers.statmodifiers.CombatStats;
 import playermodifiers.statmodifiers.StatBoosts;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,41 +19,62 @@ import java.util.Map;
 public class DPSCalculator {
 
     public void orchestrateDPSCalcs(List<PlayerLoadout> playerLoadouts, List<BossesAndMonsterStats> bossesAndMonsters) {
-        PlayerLoadout playerLoadout1 = playerLoadouts.get(0);
+        List< Map<String, Double>> dpsMatrix = new ArrayList<>();
 
-        double effectiveMeleeAttackLevel = 0;
+        for (PlayerLoadout playerLoadout : playerLoadouts) {
+            double effectiveMeleeAttackLevel = 0;
 
-        //determine style of loadout
-        if (playerLoadout1.getCombatStyle() == CombatStyle.MELEE) {
-           effectiveMeleeAttackLevel = calculateEffectiveMeleeAttackLevel(playerLoadout1.getMeleeWeapons(),
-                    playerLoadout1.getStatBoosts(), playerLoadout1.getCombatStats());
-            //Get attack roll
-            System.out.println(effectiveMeleeAttackLevel);
+            //determine style of loadout
+            if (playerLoadout.getCombatStyle() == CombatStyle.MELEE) {
+                effectiveMeleeAttackLevel = calculateEffectiveMeleeAttackLevel(playerLoadout.getMeleeWeapons(),
+                        playerLoadout.getStatBoosts(), playerLoadout.getCombatStats());
 
-            double meleeEquipmentAttackBonus = calculateMeleeEquipmentAttackBonus(playerLoadout1.getMeleeEquipmentLoadout(), playerLoadout1.getMeleeWeapons());
+                double meleeEquipmentAttackBonus = calculateMeleeEquipmentAttackBonus(playerLoadout.getMeleeEquipmentLoadout(), playerLoadout.getMeleeWeapons());
 
-            double finalAttackRoll = calculateFinalMeleeAttackRoll(effectiveMeleeAttackLevel, meleeEquipmentAttackBonus);
+                double finalAttackRoll = calculateFinalMeleeAttackRoll(effectiveMeleeAttackLevel, meleeEquipmentAttackBonus);
 
-            double effectiveMeleeStrengthLevel = calculateEffectiveStrengthLevel(playerLoadout1.getMeleeWeapons(), playerLoadout1.getStatBoosts(),
-                    playerLoadout1.getCombatStats());
+                double effectiveMeleeStrengthLevel = calculateEffectiveStrengthLevel(playerLoadout.getMeleeWeapons(), playerLoadout.getStatBoosts(),
+                        playerLoadout.getCombatStats());
 
-            double meleeEquipmentStrengthBonus = calculateMeleeEquipmentStrengthBonus(playerLoadout1.getMeleeEquipmentLoadout(), playerLoadout1.getMeleeWeapons());
+                double meleeEquipmentStrengthBonus = calculateMeleeEquipmentStrengthBonus(playerLoadout.getMeleeEquipmentLoadout(), playerLoadout.getMeleeWeapons());
 
-            double maxHit = calculateMaxHit(effectiveMeleeStrengthLevel, meleeEquipmentStrengthBonus);
+                double maxHit = calculateMaxHit(effectiveMeleeStrengthLevel, meleeEquipmentStrengthBonus);
 
-            Map<String, Double> mobDefenceRolls = new HashMap<>();
-            for (BossesAndMonsterStats bossesAndMonsterStats : bossesAndMonsters) {
-                mobDefenceRolls.put(bossesAndMonsterStats.name(), calculateTargetDefenceRoll(bossesAndMonsterStats, playerLoadout1.getMeleeWeapons()));
+                Map<String, Double> mobDefenceRolls = new HashMap<>();
+                for (BossesAndMonsterStats bossesAndMonsterStats : bossesAndMonsters) {
+                    if (playerLoadout.getCombatStyle().equals(CombatStyle.MELEE) &&
+                            !bossesAndMonsterStats.getMobRestriction().equals(MobRestriction.MELEE_IMMUNE)) {
+                        mobDefenceRolls.put(bossesAndMonsterStats.name(), calculateTargetDefenceRoll(bossesAndMonsterStats, playerLoadout.getMeleeWeapons()));
+                    }
+                }
+
+                Map<String, Double> finalDpsValues = new HashMap<>();
+                for (Map.Entry<String, Double> mobEntry : mobDefenceRolls.entrySet()) {
+                    double hitChance = calculateHiteChance(mobEntry.getValue(), finalAttackRoll);
+                    finalDpsValues.put(mobEntry.getKey(), calculateMeleeDps(maxHit, hitChance, playerLoadout.getMeleeWeapons()));
+                }
+                dpsMatrix.add(finalDpsValues);
             }
+        }
 
-            Map<String, Double> finalDpsValues = new HashMap<>();
-            for (Map.Entry<String, Double> mobEntry : mobDefenceRolls.entrySet()) {
-                double hitChance = calculateHiteChance(mobEntry.getValue(), finalAttackRoll);
-                finalDpsValues.put(mobEntry.getKey(), calculateMeleeDps(maxHit, hitChance, playerLoadout1.getMeleeWeapons()));
-                System.out.println("final dps: " + mobEntry.getKey() + " "
-                        + calculateMeleeDps(maxHit, hitChance, playerLoadout1.getMeleeWeapons()));
+        Map<String, Double> dpsCalc1 = dpsMatrix.get(0);
+        Map<String, Double> dpsCalc2 = dpsMatrix.get(1);
+
+        //TODO when doing other styles the lists won't be the same size if a boss is immune. This can be fixed with a null tracker maybe?
+        //TODO Like add a null boss to the list. Or just do another idea
+        for (Map.Entry<String, Double> dpsCalc : dpsCalc1.entrySet()) {
+            StringBuilder paddedBossName = new StringBuilder(dpsCalc.getKey() + ":");
+            if (paddedBossName.length() < 35) {
+                Integer bossNameLength = Integer.valueOf(paddedBossName.length());
+                for (int i = 0; i < (35 - bossNameLength); i++) {
+                    paddedBossName.append(" ");
+                }
             }
+            Double.valueOf(trunateDecimalPoint(dpsCalc.getValue(), 2));
 
+            System.out.println(paddedBossName + playerLoadouts.get(0).getMeleeWeapons().name() + " - "
+             + trunateDecimalPoint(dpsCalc.getValue(), 2)
+                    + "     " + playerLoadouts.get(1).getMeleeWeapons().name() + " - " + trunateDecimalPoint(dpsCalc2.get(dpsCalc.getKey()), 2));
         }
 
 
@@ -79,9 +102,6 @@ public class DPSCalculator {
         //Obligatory +8 to the number just because
         effectiveMeleeAttackLevel = effectiveMeleeAttackLevel + 8;
 
-        //TODO void melee I guess but who cares
-        System.out.println(effectiveMeleeAttackLevel);
-
         return effectiveMeleeAttackLevel;
     }
 
@@ -101,12 +121,25 @@ public class DPSCalculator {
                     meleeEquipmentLoadout.getRing().getStabAccuracy() +
                     meleeWeapons.getStabAccuracy();
 
+        } else if (meleeWeapons.getWeaponStyle().equals(MeleeWeaponStyles.SLASH)) {
+            meleeEquipmentAttackBonus =
+                    meleeEquipmentLoadout.getHeadgear().getSlashAccuracy() +
+                            meleeEquipmentLoadout.getCape().getSlashAccuracy() +
+                            meleeEquipmentLoadout.getNecklace().getSlashAccuracy() +
+                            meleeEquipmentLoadout.getBody().getSlashAccuracy() +
+                            meleeEquipmentLoadout.getLegs().getSlashAccuracy() +
+                            meleeEquipmentLoadout.getShield().getSlashAccuracy() + //TODO back up shield stat check
+                            meleeEquipmentLoadout.getHands().getSlashAccuracy() +
+                            meleeEquipmentLoadout.getFeet().getSlashAccuracy() +
+                            meleeEquipmentLoadout.getRing().getSlashAccuracy() +
+                            meleeEquipmentLoadout.getRing().getSlashAccuracy() +
+                            meleeWeapons.getSlashAccuracy();
+
         }
         return meleeEquipmentAttackBonus;
     }
 
     private double calculateFinalMeleeAttackRoll(double effectiveAttackLevel, double equipmentAttackBonus) {
-        System.out.println( Math.floor(effectiveAttackLevel * (equipmentAttackBonus + 64)));
         return Math.floor(effectiveAttackLevel * (equipmentAttackBonus + 64));
     }
 
@@ -127,9 +160,6 @@ public class DPSCalculator {
         }
         //Obligatory +8 to the number just because
         effectiveMeleeStrengthLevel = effectiveMeleeStrengthLevel + 8;
-
-        //TODO void melee I guess but who cares
-        System.out.println(effectiveMeleeStrengthLevel);
 
         return effectiveMeleeStrengthLevel;
     }
@@ -162,6 +192,8 @@ public class DPSCalculator {
         double targetStyleDefenceModifier = 0;
         if (meleeWeapons.getWeaponStyle().equals(MeleeWeaponStyles.STAB)) {
             targetStyleDefenceModifier = bossesAndMonsterStats.getStabDefence();
+        } else if (meleeWeapons.getWeaponStyle().equals(MeleeWeaponStyles.SLASH)) {
+            targetStyleDefenceModifier = bossesAndMonsterStats.getSlashDefence();
         }
         targetStyleDefenceModifier = targetStyleDefenceModifier + 64;
 
@@ -182,6 +214,17 @@ public class DPSCalculator {
 
     private double calculateMeleeDps(double maxhit, double hitChance, MeleeWeapons meleeWeapons) {
         return ((maxhit * hitChance)/2)/meleeWeapons.getWeaponSpeed().getSpeedInSeconds();
+    }
+
+    static double trunateDecimalPoint(double value, int decimalpoint)
+    {
+
+        // Using the pow() method
+        value = value * Math.pow(10, decimalpoint);
+        value = Math.floor(value);
+        value = value / Math.pow(10, decimalpoint);
+
+        return value;
     }
 
 }

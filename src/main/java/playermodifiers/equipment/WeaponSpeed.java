@@ -2,12 +2,10 @@ package playermodifiers.equipment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import playermodifiers.equipment.melee.MeleeCombatStyles;
-import playermodifiers.equipment.melee.MeleeWeaponStyles;
 
 @AllArgsConstructor
 @Getter
-public enum WeaponSpeeds {
+public enum WeaponSpeed {
     TWO_TICK(1.2),
     THREE_TICK(1.8),
     FOUR_TICK(2.4),

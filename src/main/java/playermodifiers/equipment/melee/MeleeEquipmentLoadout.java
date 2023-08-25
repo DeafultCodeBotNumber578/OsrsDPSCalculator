@@ -16,6 +16,4 @@ public class MeleeEquipmentLoadout {
     private MeleeArmor feet;
     private MeleeArmor ring;
     private MeleeWeapons meleeWeapon;
-    private MeleeCombatStyles meleeCombatStyle;
-    private MeleeWeaponStyles meleeWeaponStyle;
 }

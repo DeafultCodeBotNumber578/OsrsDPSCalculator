@@ -1,5 +1,5 @@
-import bosses.BossGroups;
-import bosses.BossesAndMonsters;
+import mobs.BossGroup;
+import calculators.DPSCalculator;
 import playermodifiers.PlayerLoadout;
 import selectors.EquipmentAndBossSelector;
 
@@ -15,7 +15,10 @@ public class DPSMain {
 
         List<PlayerLoadout> playerLoadouts = equipmentAndBossSelector.defineMeleePlayerLoadouts();
 
-        List<BossGroups> bossExclusionGroups = equipmentAndBossSelector.definBossExclusionGroups();
+        List<BossGroup> bossGroups = equipmentAndBossSelector.selectBossGroups();
+
+        DPSCalculator dpsCalculator = new DPSCalculator();
+        dpsCalculator.orchestrateDPSCalcs(playerLoadouts, bossGroups);
 
         //TODOFeed into DPS calculator
         //Dps calculator will, for each monster, determine the max hit and then average hit and use the averaged accuracy

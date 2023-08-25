@@ -1,9 +1,10 @@
 package selectors;
 
-import bosses.BossGroups;
+import mobs.BossGroup;
 import playermodifiers.CombatStyle;
 import playermodifiers.PlayerLoadout;
 import playermodifiers.equipment.melee.MeleeArmor;
+import playermodifiers.equipment.melee.MeleeCombatStyles;
 import playermodifiers.equipment.melee.MeleeEquipmentLoadout;
 import lombok.NoArgsConstructor;
 import playermodifiers.equipment.melee.MeleeWeapons;
@@ -51,12 +52,13 @@ public class EquipmentAndBossSelector {
 
         MeleeWeapons meleeWeapons1 = MeleeWeapons.GHRAZI_RAPIER;
 
+
         DefenceLoweringSpecs defenceLoweringSpecs1 = DefenceLoweringSpecs.builder()
                 .bgsSpecDamage(50)
                 .numberOfDWHSpecs(2)
                 .build();
 
-        //TODO if these aren't there assume they're max
+        //TODO if these aren't present assume they're max
         CombatStats combatStats1 = CombatStats.builder()
                 .magicLevel(99)
                 .rangedLevel(99)
@@ -80,13 +82,15 @@ public class EquipmentAndBossSelector {
         return playerLoadouts;
     }
 
-    public List<BossGroups> definBossExclusionGroups() {
-        List<BossGroups> bossExclusionGroups = new ArrayList<>();
-        BossGroups exclusionGroup1 = BossGroups.XERIC;
+    //TODO from 8/24 - SUNSHINE - Add code probably elsewhere to turn a boss selection group into a whole boss list picker.
+    //The boss definitions pojo isn't in good shape for that yet
+    public List<BossGroup> selectBossGroups() {
+        List<BossGroup> bossGroups = new ArrayList<>();
+        BossGroup bossGroup1 = BossGroup.GWD;
 
-        bossExclusionGroups.add(exclusionGroup1);
+        bossGroups.add(bossGroup1);
 
-        return bossExclusionGroups;
+        return bossGroups;
     }
 
     //TODO definePrayers();

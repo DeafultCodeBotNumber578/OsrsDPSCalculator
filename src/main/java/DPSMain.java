@@ -1,7 +1,9 @@
 import mobs.BossGroup;
 import calculators.DPSCalculator;
+import mobs.BossesAndMonsterStats;
 import playermodifiers.PlayerLoadout;
-import selectors.EquipmentAndBossSelector;
+import selectors.BossSelectionBuilder;
+import selectors.EquipmentAndBossGroupSelector;
 
 import java.util.List;
 
@@ -11,14 +13,17 @@ public class DPSMain {
 
         //Going to want to have a single file to define everything in so you don't have to switch around and make sure
         //That all of the playermodifiers.equipment is correct
-        EquipmentAndBossSelector equipmentAndBossSelector = new EquipmentAndBossSelector();
+        EquipmentAndBossGroupSelector equipmentAndBossGroupSelector = new EquipmentAndBossGroupSelector();
+        BossSelectionBuilder bossSelectionBuilder = new BossSelectionBuilder();
 
-        List<PlayerLoadout> playerLoadouts = equipmentAndBossSelector.defineMeleePlayerLoadouts();
+        List<PlayerLoadout> playerLoadouts = equipmentAndBossGroupSelector.defineMeleePlayerLoadouts();
 
-        List<BossGroup> bossGroups = equipmentAndBossSelector.selectBossGroups();
+        List<BossGroup> bossGroups = equipmentAndBossGroupSelector.selectBossGroups();
+
+        List<BossesAndMonsterStats> bossesAndMonsters = bossSelectionBuilder.buildBossAndMonsterList(bossGroups);
 
         DPSCalculator dpsCalculator = new DPSCalculator();
-        dpsCalculator.orchestrateDPSCalcs(playerLoadouts, bossGroups);
+        dpsCalculator.orchestrateDPSCalcs(playerLoadouts, bossesAndMonsters);
 
         //TODOFeed into DPS calculator
         //Dps calculator will, for each monster, determine the max hit and then average hit and use the averaged accuracy

@@ -4,7 +4,6 @@ import mobs.BossGroup;
 import playermodifiers.CombatStyle;
 import playermodifiers.PlayerLoadout;
 import playermodifiers.equipment.melee.MeleeArmor;
-import playermodifiers.equipment.melee.MeleeCombatStyles;
 import playermodifiers.equipment.melee.MeleeEquipmentLoadout;
 import lombok.NoArgsConstructor;
 import playermodifiers.equipment.melee.MeleeWeapons;
@@ -18,7 +17,7 @@ import java.util.List;
 
 //Define the Equipment and Boss list setups you want in here
 @NoArgsConstructor
-public class EquipmentAndBossSelector {
+public class EquipmentAndBossGroupSelector {
 
     /*
         .headgear()

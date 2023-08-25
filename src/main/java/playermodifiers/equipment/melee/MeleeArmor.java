@@ -1,5 +1,8 @@
 package playermodifiers.equipment.melee;
 
+import lombok.Getter;
+
+@Getter
 public enum MeleeArmor {
     //Melee armor has 4 important properties. 1) stab accuracy, 2) slash accuracy, 3) crush accuracy, 4) strength
 
@@ -43,18 +46,18 @@ public enum MeleeArmor {
     //Ring
     BERSERKER_RING(0,0,0,8,0,0);
 
-    public final int stabAccuracy;
-    public final int slashAccuracy;
-    public final int crushAccuracy;
-    public final int mageAccuracy;
-    public final int rangedAccuracy;
-    public final int strength;
+    private final int stabAccuracy;
+    private final int slashAccuracy;
+    private final int crushAccuracy;
+    private final int mageAccuracy;
+    private final int rangedAccuracy;
+    private final int strengthBonus;
 
-    private MeleeArmor(int stabAccuracy, int slashAccuracy, int crushAccuracy, int strength, int mageAccuracy, int rangedAccuracy) {
+    private MeleeArmor(int stabAccuracy, int slashAccuracy, int crushAccuracy, int strengthBonus, int mageAccuracy, int rangedAccuracy) {
         this.stabAccuracy = stabAccuracy;
         this.slashAccuracy = slashAccuracy;
         this.crushAccuracy = crushAccuracy;
-        this.strength = strength;
+        this.strengthBonus = strengthBonus;
         this.rangedAccuracy = mageAccuracy;
         this.mageAccuracy = rangedAccuracy;
     }

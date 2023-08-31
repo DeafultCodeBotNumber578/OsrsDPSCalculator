@@ -49,9 +49,9 @@ public enum BossesAndMonsterStats {
     VETION(255, 395, 300, 201, 200, -10, 250, 270, BossGroup.MAJOR_WILDY, List.of(MobRestriction.NONE)),
     SPINDEL(515, 225, 205, 70, 70, 10, 205, 103, BossGroup.MAJOR_WILDY, List.of(MobRestriction.NONE)),
     VENENATIS(850, 321, 300, 100, 100, 10, 300, 150, BossGroup.MAJOR_WILDY, List.of(MobRestriction.NONE)),
-    ARTIO(450, 150, 1, 125, 110, 110, 0, 40, BossGroup.MAJOR_WILDY, List.of(MobRestriction.NONE)),
+    ARTIO(450, 150, 1, 125, 110, 110, 0, 40, BossGroup.MAJOR_WILDY, List.of(MobRestriction.MAGIC_RESIST)),
     CALLISTO(1000, 225, 1, 150,
-            130, 125, 0, 50, BossGroup.MAJOR_WILDY, List.of(MobRestriction.NONE));
+            130, 125, 0, 50, BossGroup.MAJOR_WILDY, List.of(MobRestriction.MAGIC_RESIST));
 
 
     private final int hp;

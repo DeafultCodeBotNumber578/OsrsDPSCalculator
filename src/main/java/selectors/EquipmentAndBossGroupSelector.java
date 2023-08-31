@@ -47,9 +47,8 @@ public class EquipmentAndBossGroupSelector {
                 .hands(MeleeArmor.FEROCIOUS_GLOVES)
                 .feet(MeleeArmor.DRAGON_BOOTS)
                 .ring(MeleeArmor.BERSERKER_RING)
+                .meleeWeapon(MeleeWeapons.ABYSSAL_TENTACLE)
                 .build();
-
-        MeleeWeapons meleeWeapons1 = MeleeWeapons.ABYSSAL_TENTACLE;
 
 
         DefenceLoweringSpecs defenceLoweringSpecs1 = DefenceLoweringSpecs.builder()
@@ -74,7 +73,7 @@ public class EquipmentAndBossGroupSelector {
 
         CombatStyle combatStyle = CombatStyle.MELEE;
 
-        playerLoadouts.add(new PlayerLoadout(meleeEquipmentLoadout1, meleeWeapons1, null, null,
+        playerLoadouts.add(new PlayerLoadout(meleeEquipmentLoadout1, null, null,
                 defenceLoweringSpecs1, statBoosts1, combatStats1, combatStyle));
         //END-MELEE LOAD OUT 1-----------------------------------------------------
 
@@ -116,7 +115,7 @@ public class EquipmentAndBossGroupSelector {
 
         CombatStyle combatStyle2 = CombatStyle.MELEE;
 
-        playerLoadouts.add(new PlayerLoadout(meleeEquipmentLoadout2, meleeWeapons2, null, null,
+        playerLoadouts.add(new PlayerLoadout(meleeEquipmentLoadout2,null, null,
                 defenceLoweringSpecs2, statBoosts2, combatStats2, combatStyle2));
         //END-MELEE LOAD OUT 1-----------------------------------------------------
 

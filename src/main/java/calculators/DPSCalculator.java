@@ -18,25 +18,31 @@ import java.util.Map;
 
 public class DPSCalculator {
 
+    //The fang's dps
+    //If the accuracy roll is bigger than the defence roll then: 1-(def+2)*(2*def+3)/(acc+1)/(acc+1)/6
+    //If the defence roll is bigger than the attack roll then: D28*(4*acc+5)/6/(acc+1)/(def+1))
+    //I did the calculation in order and it really is that crazy, like 4 divisions in a row
+
     public void orchestrateDPSCalcs(List<PlayerLoadout> playerLoadouts, List<BossesAndMonsterStats> bossesAndMonsters) {
         List< Map<String, Double>> dpsMatrix = new ArrayList<>();
 
         for (PlayerLoadout playerLoadout : playerLoadouts) {
             double effectiveMeleeAttackLevel = 0;
+            MeleeEquipmentLoadout meleeEquipmentLoadout = playerLoadout.getMeleeEquipmentLoadout();
 
             //determine style of loadout
             if (playerLoadout.getCombatStyle() == CombatStyle.MELEE) {
-                effectiveMeleeAttackLevel = calculateEffectiveMeleeAttackLevel(playerLoadout.getMeleeWeapons(),
+                effectiveMeleeAttackLevel = calculateEffectiveMeleeAttackLevel(meleeEquipmentLoadout.getMeleeWeapon(),
                         playerLoadout.getStatBoosts(), playerLoadout.getCombatStats());
 
-                double meleeEquipmentAttackBonus = calculateMeleeEquipmentAttackBonus(playerLoadout.getMeleeEquipmentLoadout(), playerLoadout.getMeleeWeapons());
+                double meleeEquipmentAttackBonus = calculateMeleeEquipmentAttackBonus(playerLoadout.getMeleeEquipmentLoadout(), meleeEquipmentLoadout.getMeleeWeapon());
 
                 double finalAttackRoll = calculateFinalMeleeAttackRoll(effectiveMeleeAttackLevel, meleeEquipmentAttackBonus);
 
-                double effectiveMeleeStrengthLevel = calculateEffectiveStrengthLevel(playerLoadout.getMeleeWeapons(), playerLoadout.getStatBoosts(),
+                double effectiveMeleeStrengthLevel = calculateEffectiveStrengthLevel(meleeEquipmentLoadout.getMeleeWeapon(), playerLoadout.getStatBoosts(),
                         playerLoadout.getCombatStats());
 
-                double meleeEquipmentStrengthBonus = calculateMeleeEquipmentStrengthBonus(playerLoadout.getMeleeEquipmentLoadout(), playerLoadout.getMeleeWeapons());
+                double meleeEquipmentStrengthBonus = calculateMeleeEquipmentStrengthBonus(playerLoadout.getMeleeEquipmentLoadout(), meleeEquipmentLoadout.getMeleeWeapon());
 
                 double maxHit = calculateMaxHit(effectiveMeleeStrengthLevel, meleeEquipmentStrengthBonus);
 
@@ -44,14 +50,14 @@ public class DPSCalculator {
                 for (BossesAndMonsterStats bossesAndMonsterStats : bossesAndMonsters) {
                     if (playerLoadout.getCombatStyle().equals(CombatStyle.MELEE) &&
                             !bossesAndMonsterStats.getMobRestriction().equals(MobRestriction.MELEE_IMMUNE)) {
-                        mobDefenceRolls.put(bossesAndMonsterStats.name(), calculateTargetDefenceRoll(bossesAndMonsterStats, playerLoadout.getMeleeWeapons()));
+                        mobDefenceRolls.put(bossesAndMonsterStats.name(), calculateTargetDefenceRoll(bossesAndMonsterStats, meleeEquipmentLoadout.getMeleeWeapon()));
                     }
                 }
 
                 Map<String, Double> finalDpsValues = new HashMap<>();
                 for (Map.Entry<String, Double> mobEntry : mobDefenceRolls.entrySet()) {
                     double hitChance = calculateHiteChance(mobEntry.getValue(), finalAttackRoll);
-                    finalDpsValues.put(mobEntry.getKey(), calculateMeleeDps(maxHit, hitChance, playerLoadout.getMeleeWeapons()));
+                    finalDpsValues.put(mobEntry.getKey(), calculateMeleeDps(maxHit, hitChance, meleeEquipmentLoadout.getMeleeWeapon()));
                 }
                 dpsMatrix.add(finalDpsValues);
             }
@@ -72,22 +78,27 @@ public class DPSCalculator {
             }
             Double.valueOf(trunateDecimalPoint(dpsCalc.getValue(), 2));
 
-            System.out.println(paddedBossName + playerLoadouts.get(0).getMeleeWeapons().name() + " - "
+            System.out.println(paddedBossName + playerLoadouts.get(0).getMeleeEquipmentLoadout().getMeleeWeapon().name() + " - "
              + trunateDecimalPoint(dpsCalc.getValue(), 2)
-                    + "     " + playerLoadouts.get(1).getMeleeWeapons().name() + " - " + trunateDecimalPoint(dpsCalc2.get(dpsCalc.getKey()), 2));
+                    + "     " + playerLoadouts.get(1).getMeleeEquipmentLoadout().getMeleeWeapon().name()
+                    + " - " + trunateDecimalPoint(dpsCalc2.get(dpsCalc.getKey()), 2));
         }
 
 
 
     }
 
-    //TODO this is untested
+    /**
+     * Effective Melee Attack is -> (Attack level + Attack level boost) * prayer bonus - floor, +3/+1 for style, +8
+     * @param meleeWeapons
+     * @param statBoosts
+     * @param combatStats
+     * @return
+     */
+
     private double calculateEffectiveMeleeAttackLevel(MeleeWeapons meleeWeapons,
                                                       StatBoosts statBoosts, CombatStats combatStats) {
-        //Effective Melee Attack is -> (Attack level + Attack level boost) * prayer bonus - floor, +3/+1 for style, +8
-
         //Attack level boost is flatLevelBoost + (% level boost * base lvl) I.E. overloads are 6 flat + 16% * base level
-        //TODO I don't know where the take the floor value. need to check dps calulator
         double attackLevelBoost = Math.floor(Float.valueOf(statBoosts.getMeleeBoost().flatLevelBoost) +
                 ((Float.valueOf(combatStats.attackLevel) * Float.valueOf(statBoosts.getMeleeBoost().percentageLevelBoost)/100f)));
 
@@ -148,7 +159,7 @@ public class DPSCalculator {
 
         //TODO I don't know where the take the floor value. need to check dps calulator
         double strengthLevelBoost = Math.floor(Float.valueOf(statBoosts.getMeleeBoost().flatLevelBoost) +
-                ((Float.valueOf(combatStats.strengthLevel) * Float.valueOf(statBoosts.getMeleeBoost().percentageLevelBoost)/100f)));
+                (((float) combatStats.strengthLevel * Float.valueOf(statBoosts.getMeleeBoost().percentageLevelBoost)/100f)));
 
         double effectiveMeleeStrengthLevel = Math.floor((Float.valueOf(combatStats.strengthLevel) + strengthLevelBoost));
 

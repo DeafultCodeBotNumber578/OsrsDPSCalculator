@@ -14,7 +14,6 @@ import playermodifiers.statmodifiers.StatBoosts;
 @AllArgsConstructor
 public class PlayerLoadout {
     private MeleeEquipmentLoadout meleeEquipmentLoadout;
-    private MeleeWeapons meleeWeapons;
     private RangedEquipmentLoadout rangedEquipmentLoadout;
     private MageEquipmentLoadout mageEquipmentLoadout;
     private DefenceLoweringSpecs defenceLoweringSpecs;

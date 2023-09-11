@@ -5,9 +5,7 @@ import lombok.Builder;
 
 @AllArgsConstructor
 @Builder
-public class CombatStats {
-    public int magicLevel;
-    public int rangedLevel;
+public class MeleeCombatStats {
     public int attackLevel;
     public int strengthLevel;
 

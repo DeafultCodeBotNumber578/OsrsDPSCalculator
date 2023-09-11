@@ -7,8 +7,7 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 @Data
+//TODO this might be unecessary
 public class StatBoosts {
-    StatBoostingItems magicBoost;
-    StatBoostingItems rangedBoost;
-    StatBoostingItems meleeBoost;
+    StatBoostingItems statBoost;
 }

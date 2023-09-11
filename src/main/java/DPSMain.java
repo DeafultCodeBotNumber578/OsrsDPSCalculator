@@ -1,7 +1,7 @@
+import calculators.MeleeDPSCalculator;
 import mobs.BossGroup;
-import calculators.DPSCalculator;
 import mobs.BossesAndMonsterStats;
-import playermodifiers.PlayerLoadout;
+import playermodifiers.equipment.melee.MeleeLoadout;
 import selectors.BossSelectionBuilder;
 import selectors.EquipmentAndBossGroupSelector;
 
@@ -16,14 +16,14 @@ public class DPSMain {
         EquipmentAndBossGroupSelector equipmentAndBossGroupSelector = new EquipmentAndBossGroupSelector();
         BossSelectionBuilder bossSelectionBuilder = new BossSelectionBuilder();
 
-        List<PlayerLoadout> playerLoadouts = equipmentAndBossGroupSelector.defineMeleePlayerLoadouts();
+        List<MeleeLoadout> meleeLoadouts = equipmentAndBossGroupSelector.defineMeleePlayerLoadouts();
 
         List<BossGroup> bossGroups = equipmentAndBossGroupSelector.selectBossGroups();
 
         List<BossesAndMonsterStats> bossesAndMonsters = bossSelectionBuilder.buildBossAndMonsterList(bossGroups);
 
-        DPSCalculator dpsCalculator = new DPSCalculator();
-        dpsCalculator.orchestrateDPSCalcs(playerLoadouts, bossesAndMonsters);
+        MeleeDPSCalculator dpsCalculatorOrchestrator = new MeleeDPSCalculator();
+        dpsCalculatorOrchestrator.calculateMeleeDps(meleeLoadouts, bossesAndMonsters);
 
         //TODOFeed into DPS calculator
         //Dps calculator will, for each monster, determine the max hit and then average hit and use the averaged accuracy

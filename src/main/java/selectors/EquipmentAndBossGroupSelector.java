@@ -1,8 +1,8 @@
 package selectors;
 
 import mobs.BossGroup;
-import playermodifiers.CombatStyle;
-import playermodifiers.PlayerLoadout;
+import calculators.CombatStyle;
+import playermodifiers.equipment.melee.MeleeLoadout;
 import playermodifiers.equipment.melee.MeleeArmor;
 import playermodifiers.equipment.melee.MeleeEquipmentLoadout;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import playermodifiers.equipment.melee.MeleeWeapons;
 import playermodifiers.statmodifiers.DefenceLoweringSpecs;
 import playermodifiers.statmodifiers.StatBoostingItems;
 import playermodifiers.statmodifiers.StatBoosts;
-import playermodifiers.statmodifiers.CombatStats;
+import playermodifiers.statmodifiers.MeleeCombatStats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +33,8 @@ public class EquipmentAndBossGroupSelector {
         Classes: MeleeArmor, RangedArmor, MageArmor
      */
 
-    public List<PlayerLoadout> defineMeleePlayerLoadouts() {
-        List<PlayerLoadout> playerLoadouts = new ArrayList<>();
+    public List<MeleeLoadout> defineMeleePlayerLoadouts() {
+        List<MeleeLoadout> meleeLoadouts = new ArrayList<>();
 
         //MELEE LOAD OUT 1------------------------------------------------------------
         MeleeEquipmentLoadout meleeEquipmentLoadout1 =  MeleeEquipmentLoadout.builder()
@@ -57,27 +57,22 @@ public class EquipmentAndBossGroupSelector {
                 .build();
 
         //TODO if these aren't present assume they're max
-        CombatStats combatStats1 = CombatStats.builder()
-                .magicLevel(99)
-                .rangedLevel(99)
+        MeleeCombatStats meleeCombatStats1 = MeleeCombatStats.builder()
                 .attackLevel(99)
                 .strengthLevel(99)
                 .build();
 
         //TODO this can be simplified. No need to have it repeated because you're only going to be using all overloads, all salts, or all supers
         StatBoosts statBoosts1 = StatBoosts.builder()
-                .magicBoost(StatBoostingItems.SMELLING_SALTS)
-                .rangedBoost(StatBoostingItems.SMELLING_SALTS)
-                .meleeBoost(StatBoostingItems.SMELLING_SALTS)
+                .statBoost(StatBoostingItems.SMELLING_SALTS)
                 .build();
 
         CombatStyle combatStyle = CombatStyle.MELEE;
 
-        playerLoadouts.add(new PlayerLoadout(meleeEquipmentLoadout1, null, null,
-                defenceLoweringSpecs1, statBoosts1, combatStats1, combatStyle));
+        meleeLoadouts.add(new MeleeLoadout(meleeEquipmentLoadout1, null, statBoosts1, 99, 99));
         //END-MELEE LOAD OUT 1-----------------------------------------------------
 
-        //MELEE LOAD OUT 1------------------------------------------------------------
+        //MELEE LOAD OUT 2------------------------------------------------------------
         MeleeEquipmentLoadout meleeEquipmentLoadout2 =  MeleeEquipmentLoadout.builder()
                 .headgear(MeleeArmor.SERPENTINE_HELM)
                 .cape(MeleeArmor.INFERNAL_CAPE)
@@ -88,6 +83,7 @@ public class EquipmentAndBossGroupSelector {
                 .hands(MeleeArmor.FEROCIOUS_GLOVES)
                 .feet(MeleeArmor.DRAGON_BOOTS)
                 .ring(MeleeArmor.BERSERKER_RING)
+                .meleeWeapon(MeleeWeapons.GHRAZI_RAPIER)
                 .build();
 
         MeleeWeapons meleeWeapons2 = MeleeWeapons.GHRAZI_RAPIER;
@@ -99,27 +95,22 @@ public class EquipmentAndBossGroupSelector {
                 .build();
 
         //TODO if these aren't present assume they're max
-        CombatStats combatStats2 = CombatStats.builder()
-                .magicLevel(99)
-                .rangedLevel(99)
+        MeleeCombatStats meleeCombatStats2 = MeleeCombatStats.builder()
                 .attackLevel(99)
                 .strengthLevel(99)
                 .build();
 
         //TODO this can be simplified. No need to have it repeated because you're only going to be using all overloads, all salts, or all supers
         StatBoosts statBoosts2 = StatBoosts.builder()
-                .magicBoost(StatBoostingItems.SMELLING_SALTS)
-                .rangedBoost(StatBoostingItems.SMELLING_SALTS)
-                .meleeBoost(StatBoostingItems.SMELLING_SALTS)
+                .statBoost(StatBoostingItems.SMELLING_SALTS)
                 .build();
 
         CombatStyle combatStyle2 = CombatStyle.MELEE;
 
-        playerLoadouts.add(new PlayerLoadout(meleeEquipmentLoadout2,null, null,
-                defenceLoweringSpecs2, statBoosts2, combatStats2, combatStyle2));
-        //END-MELEE LOAD OUT 1-----------------------------------------------------
+        meleeLoadouts.add(new MeleeLoadout(meleeEquipmentLoadout2,null, statBoosts2, 99, 99));
+        //END-MELEE LOAD OUT 2-----------------------------------------------------
 
-        return playerLoadouts;
+        return meleeLoadouts;
     }
 
     //TODO from 8/24 - SUNSHINE - Add code probably elsewhere to turn a boss selection group into a whole boss list picker.
